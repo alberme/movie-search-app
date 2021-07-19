@@ -1,4 +1,15 @@
 /**
+ * spotify
+ * Client ID 114d61979bc74802aeadd07c30a0265e
+    Client Secret df5f577f50eb4f3686bf1b1fce02d50f
+
+    https://api.spotify.com/v1/search?q=Solo%3A%20A%20Star%20Wars%20Story%20soundtrack&type=playlist"
+    -H "Accept: application/json" 
+    -H "Content-Type: application/json"
+    -H "Authorization: Bearer BQCrmFNXEz_BZ_YBIY5BcdVCOBwtKib7x3Jc6ZE58kMGwMqRQPictnG9MI2-H2u_DVCVKkCSRKoro9tOGwytiN-GP1j6MN7AP7qVzsCDLT_tS8_MLH9Af4TShNK-0CH_pps0sOyDp-kYpZkKXUcoPvdw6oG_6cDgJQ8
+ */
+
+/**
  * {
   "playlists": {
     "href": "https://api.spotify.com/v1/search?query=Solo%3A+A+Star+Wars+Story+soundtrack&type=playlist&offset=0&limit=20",

@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import { PropTypes } from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.css';
 // Put any other imports below so that CSS from your
 // components takes precedence over default styles.
 
-export const SearchBar = ({ onSubmit }) => {
-  const [query, updateQuery] = useState({ search: "", type: "movie" });
+const SearchBar = ({ onSubmit }) => {
+  const [query, updateQuery] = useState({ search: "", type: "movie", instigator: "search" });
   const [searchError, updateSearchError] = useState(false);
 
   const handleSubmit = (event) => {
@@ -45,3 +46,9 @@ export const SearchBar = ({ onSubmit }) => {
     </form>
   )
 }
+
+SearchBar.propTypes = {
+  onSubmit: PropTypes.func,
+}
+
+export default SearchBar;

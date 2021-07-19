@@ -4,7 +4,9 @@
 }
 .modal-hidden {
   filter: blur(0px) brightness(1.0);
+  pointer-events: all;
 }
 .modal-visible {
   filter: blur(4px) brightness(0.8);
+  pointer-events: none;
 }

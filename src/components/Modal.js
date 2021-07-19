@@ -1,6 +1,7 @@
+import { PropTypes } from 'prop-types';
 import "../styles/Modal.css";
 // show: boolean, onClose: function, children: Component
-export const Modal = ({ onClose, children }) => {
+const Modal = ({ onClose, children }) => {
   return (
     <div className="modal-container">
       <div className="modal-header">
@@ -13,3 +14,9 @@ export const Modal = ({ onClose, children }) => {
     </div>
   )
 }
+
+Modal.propTypes = {
+  onClose: PropTypes.func,
+}
+
+export default Modal;

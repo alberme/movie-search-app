@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
+import { PropTypes } from 'prop-types';
 import MovieApi from '../utils/movie.service.js';
 import "../styles/MovieDetails.css";
 
-export const MovieDetails = ({ selectedMovieId }) => {
+const MovieDetails = ({ selectedMovieId }) => {
   const [details, setDetails] = useState({});
 
   const getMovie = async (id) => {
@@ -56,3 +57,9 @@ export const MovieDetails = ({ selectedMovieId }) => {
     </div>
   )
 }
+
+MovieDetails.propTypes = {
+  selectedMovieId: PropTypes.string
+};
+
+export default MovieDetails;
