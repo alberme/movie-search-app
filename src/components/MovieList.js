@@ -1,55 +1,92 @@
-import { MovieCard } from "./MovieCard";
-import { MovieDetails } from './MovieDetails'
 import { useState, useEffect } from "react";
-import MovieApi from '../utils/api.js';
+import { PropTypes } from 'prop-types';
+
+import { MovieCard } from "./MovieCard";
+import { MovieDetails } from './MovieDetails';
+import Paginator from './Paginator';
+import MovieApi from '../utils/movie.service.js';
 import { Modal } from './Modal';
 
 /**
  * @param {*} movieQuery { search: string, type: string } 
  */
-export const MovieList = ({ movieQuery }) => {
-  const [movieList, setMovieList] = useState([]);
+const MovieList = ({ movieQuery }) => {
+  // Response can be: Init, Loading, True, False
+  // PascalCase to keep consistent with the omdb api, except for totalResults
+  const [movieListResponse, setMovieListResponse] = useState({ Response: "Init", Search: [], totalResults: 0 });
   const [showModal, setShowModal] = useState(false);
   const [selectedMovieId, setSelectedMovieId] = useState("");
-
-  // const showMovieData = (index) => {
-  //   if (index === showMovie) return setShowMovie(false);
-  //   setShowMovie(index);
-  // }
-  const onClose = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  const handleModalClose = () => {
     setSelectedMovieId("");
     setShowModal(false);
   }
-  const onClick = (id) => {
+  const handleCardClick = (id) => {
     setSelectedMovieId(id);
     setShowModal(true);
   }
 
-  const getMovies = async ({ search, type }) => {
-    const movies = await MovieApi.fetchMovieDataByName(search, type);
-    setMovieList(movies.Search ? movies.Search : movies);
+  const handlePageChange = (newPage) => {
+    setMovieListResponse({ ...movieListResponse, Response: "Loading" });
+    setCurrentPage(newPage);
+    // if new search you need to set currentPage back to 1 somehow
   }
 
-  const renderMovieList = () => {
-    // console.log(movieList);
-    return !movieList.Error ? (
-      <div className="movie-list-container">
-        {
-          movieList.map(({ Title, Type, Poster, imdbID }) => (
-            <MovieCard Title={Title} Type={Type} Poster={Poster} imdbID={imdbID} onClick={onClick} key={imdbID} />
-          ))
-        }
-      </div>
-    ) : (
-      <div className="movie-list-error">
-        <h2>Could not find {movieQuery.search}!</h2>
-      </div>
-    )
+  const getMovies = async ({ search, type }, queryPage) => {
+    const response = await MovieApi.fetchMovieDataByName(search, type, queryPage); // maybeee wrap in try catch
+    setMovieListResponse(response);
   }
 
-  const renderModal = () => (
-    <Modal onClose={onClose}>
-      <MovieDetails selectedMovieId={selectedMovieId} />
+  const renderMovieList = (movieListResponse, currentPage) => {
+    const { Response, Search, totalResults, Error } = movieListResponse;
+
+    switch (Response) {
+      case "Init":
+        return (
+          <div className="movie-init-container">
+            <h2>Search for a Movie, TV Series, or Episode!</h2>
+          </div>
+        )
+      case "Loading":
+        return (
+          <div className="movie-loading-container">
+            <h2>Loading...</h2>
+            <div className="movie-card-loading"></div>
+          </div>
+        );
+      case "True":
+        return (
+          <>
+            <div className="movie-list-container">
+            {
+              Search.map(({ Title, Type, Poster, imdbID }) => (
+                <MovieCard Title={Title} Type={Type} Poster={Poster} imdbID={imdbID} onClick={handleCardClick} key={imdbID} />
+              ))
+            }
+            {
+              showModal && renderModal(selectedMovieId)
+            }
+            </div>
+            
+            <Paginator currentPage={currentPage} totalResults={parseInt(totalResults)} onPageChange={handlePageChange} />
+          </>
+        )
+      case "False":
+        return (
+          <div className="movie-error-container">
+            <h2>Could not find {movieQuery.search}!</h2>
+            <h2>{Error}</h2>
+          </div>
+        );
+      default:
+        console.warn(`renderMovieList(): unknown case ${Response}`)
+    }
+  }
+
+  const renderModal = (id) => (
+    <Modal onClose={handleModalClose}>
+      <MovieDetails selectedMovieId={id} />
     </Modal>
   );
 
@@ -57,10 +94,21 @@ export const MovieList = ({ movieQuery }) => {
 
   useEffect(() => {
     if (movieQuery && !showModal) {
-      getMovies(movieQuery);
+      getMovies(movieQuery, currentPage);
     }
-  }, [showModal, movieQuery])
+  }, [showModal, movieQuery, currentPage])
 
-  return !showModal ? renderMovieList() : renderModal();
+  // return !showModal ? renderMovieList(movieListResponse, currentPage) : renderModal(selectedMovieId);
+
+  return renderMovieList(movieListResponse, currentPage);
   
 }
+
+MovieList.propTypes = {
+  movieQuery: PropTypes.shape({
+    search: PropTypes.string,
+    type: PropTypes.string
+  })
+};
+
+export default MovieList;

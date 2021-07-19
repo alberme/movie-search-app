@@ -35,8 +35,38 @@
   /* font-weight: bold; */
 }
 
+.movie-card-loading {
+  box-shadow: 0 4px 10px 0 rgba(33, 33, 33, 0.15);
+  border-radius: 4px;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.movie-card-loading::before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: -150px;
+  top: 0;
+  height: 100%;
+  width: 150px;
+  background: linear-gradient(to right, transparent 0%, #E8E8E8 50%, transparent 100%);
+  animation: load 1s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+}
+
+@keyframes load {
+  from {
+      left: -150px;
+  }
+  to   {
+      left: 100%;
+  }
+}
+
+/* MovieDetails */
 .movie-list-container {
-  margin: 6em;
+  padding: 2em 6em;
   display: grid;
   grid-template-columns: repeat(4, 4fr);
   grid-auto-columns: minmax(100px, auto);

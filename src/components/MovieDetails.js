@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import MovieApi from '../utils/api.js';
+import MovieApi from '../utils/movie.service.js';
 import "../styles/MovieDetails.css";
 
 export const MovieDetails = ({ selectedMovieId }) => {
@@ -35,7 +35,7 @@ export const MovieDetails = ({ selectedMovieId }) => {
         <div className="information-container">
           <h2 className="title">{details.Title}</h2>
           <span className="rating">{details.imdbRating}</span>
-          {/* careful imdb rating could be an array */}
+          {/* careful Ratings is an array */}
         </div>
         {/* ButtonContainer */}
         <div className="button-container">

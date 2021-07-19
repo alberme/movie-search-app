@@ -1,15 +1,22 @@
 .modal-container {
   /* width: 100%;
   height: 100vh; */
+  position: fixed;
+  top: 10vh;
+  /* bottom: 10vh; */
+  left: 10vw;
+  right: 10vw;
   display: grid;
   grid-template-rows: 80px 600px;
   grid-template-columns: 0.3fr 1fr;
-  margin: 2em 10em;
+  filter: blur(0px);
+  z-index: 9999;
 }
 .modal-header {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
   border: 1px solid lightgray;
+  background-color: whitesmoke;
 }
 .modal-aside {
   grid-column: 1 / 2;

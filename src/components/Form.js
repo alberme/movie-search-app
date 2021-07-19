@@ -19,6 +19,10 @@ export const Form = ({ logFormData }) => {
     setFormData({ ...formData, [name]: value });
   }
 
+  const onClick = (e) => {
+    console.log(e);
+  }
+
   return (
     <form onSubmit={e => onFormSubmit(e)}>
       <div>
@@ -33,7 +37,7 @@ export const Form = ({ logFormData }) => {
         <label htmlFor="email">Email</label>
         <input type="text" name="email" onChange={onInputChange} />
       </div>
-      <button>Submit</button>
+      <button onClick={onClick} name="hello">Submit</button>
     </form>
   )
 }

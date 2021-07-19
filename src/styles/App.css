@@ -1,0 +1,10 @@
+.movie-app-container {
+  padding: 4em;
+  background-color: azure;
+}
+.modal-hidden {
+  filter: blur(0px) brightness(1.0);
+}
+.modal-visible {
+  filter: blur(4px) brightness(0.8);
+}

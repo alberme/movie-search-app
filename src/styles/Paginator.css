@@ -1,0 +1,25 @@
+.paginator-container {
+  margin-bottom: 2em;
+  /* float: left; */
+}
+.paginator-button-enabled {
+  background-color: dodgerblue;
+  color: white;
+  font-size: xx-large;
+  /* float: left; */
+  padding: 4px 10px;
+  border-radius: 2px;
+  margin: 0px 6px;
+  transition: background-color .3s;
+  cursor: pointer;
+}
+.paginator-button-disabled {
+  background-color: lightgray;
+  color: white;
+  font-size: xx-large;
+  /* float: left; */
+  padding: 4px 10px;
+  border-radius: 2px;
+  margin: 0px 6px;
+  cursor: not-allowed;
+}

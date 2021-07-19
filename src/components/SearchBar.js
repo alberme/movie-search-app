@@ -33,7 +33,7 @@ export const SearchBar = ({ onSubmit }) => {
   }
 
   return (
-    <form className="form-inline m-4" onSubmit={handleSubmit}>
+    <form className="form-inline m-2" onSubmit={handleSubmit}>
       { searchError ? <div className="alert alert-danger" role="alert">Please enter a movie</div> : null }
       <input className="form-control rounded w-50 p-2 float-left" name="search" type="search" placeholder="Search" aria-label="Search" onChange={handleInputChange} />
       <select className="form-control w-25 p-2 float-right" name="type" onChange={handleInputChange}>
