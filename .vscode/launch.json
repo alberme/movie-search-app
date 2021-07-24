@@ -16,6 +16,15 @@
         }
     ],
     "configurations": [
+        {
+            "name": "node test.js",
+            "program": "${workspaceFolder}/test.js",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+        },
         /** Run Configs **/
         {
             "type": "node",

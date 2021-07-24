@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { PropTypes } from 'prop-types';
 
-import { MovieCard } from "./MovieCard";
+import MovieCard from "./MovieCard/MovieCard";
 // import { MovieDetails } from './MovieDetails';
 import Paginator from './Paginator';
 import MovieApi from '../utils/movie.service.js';
+import UserMovieListService from '../utils/userMovieList.service';
 // import { Modal } from './Modal';
 
 /**
@@ -15,12 +16,19 @@ const MovieList = ({ movieQuery, onSelection: handleSelection }) => {
   // PascalCase to keep consistent with the omdb api, except for totalResults
   const [movieListResponse, setMovieListResponse] = useState({ Response: "Init", Search: [], totalResults: 0 });
   const [currentPage, setCurrentPage] = useState(1);
+  const userMovieListService = new UserMovieListService();
 
   const handlePageChange = (newPage) => {
     setMovieListResponse({ ...movieListResponse, Response: "Loading" });
     setCurrentPage(newPage);
     // if new search you need to set currentPage back to 1 somehow
   }
+  
+  const handleAddMovieToUserList = (id) => {
+    userMovieListService.addMovieToList(id);
+  }
+
+
   const getMovies = async ({ search, type }, page) => {
     const response = await MovieApi.fetchMovieDataByName(search, type, page); // maybeee wrap in try catch
     setMovieListResponse(response);
@@ -47,8 +55,8 @@ const MovieList = ({ movieQuery, onSelection: handleSelection }) => {
           <>
             <div className="movie-list-container">
             {
-              Search.map(({ Title, Type, Poster, imdbID }) => (
-                <MovieCard Title={Title} Type={Type} Poster={Poster} imdbID={imdbID} onClick={handleSelection} key={imdbID} />
+              Search.map((movie) => (
+                <MovieCard movie={movie} imdbID={movie.imdbID} key={movie.imdbID} onClick={handleSelection} onAddToMovieList={handleAddMovieToUserList}/>
               ))
             }
             {
