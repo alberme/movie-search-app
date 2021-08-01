@@ -29,7 +29,7 @@ const SearchBar = ({ onSubmit }) => {
       console.warn(`received unnamed element ${target.localName}`);
       return;
     }
-    console.log(target.value);
+    // console.log(target.value);
     updateQuery({ ...query, [target.name]: target.value });
   }
 

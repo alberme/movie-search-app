@@ -11,10 +11,10 @@
   max-height: 100%;
   max-width: 100%;
   border: 1px solid gray;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
-.movie-card h4 {
+.movie-card h5 {
   margin: 2px;
   font-size: large;
 }

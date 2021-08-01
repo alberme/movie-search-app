@@ -7,7 +7,8 @@
   left: 10vw;
   right: 10vw;
   display: grid;
-  grid-template-rows: 80px 600px;
+  /* 80px 600px */
+  grid-template-rows: 5vw 40vw;
   grid-template-columns: 0.3fr 1fr;
   filter: blur(0px);
   z-index: 9999;
